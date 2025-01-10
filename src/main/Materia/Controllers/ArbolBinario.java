@@ -6,22 +6,21 @@ public class ArbolBinario {
     private Node root;
     
     public void insert(int value) {
-        root = insert(root, value);
+        root = insert (root, value);
     }
 
-    private Node insert(Node node, int value){
-        if (node == null)
-            return new Node(value);
-
-        if (value < node.getValue()){
-            node.setLeft(insert(node.getLeft(), value));
+    private Node insert(Node node, int value) {
+        if (node == null) {
+            return new Node(value); 
         }
-        else if (value > node.getValue()) {
+        if (value < node.getValue()) {
+            node.setLeft(insert(node.getLeft(), value));
+        } else if (value > node.getValue()) {
             node.setRight(insert(node.getRight(), value));
         }
         return node;
     }
-
+    
     public void printTree(){
         printTree(root, " ", true);
     }
@@ -47,4 +46,7 @@ public class ArbolBinario {
             }
         }
     }
+    public Node getRoot() {
+        return root;
+    }    
 }
