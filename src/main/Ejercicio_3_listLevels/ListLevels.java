@@ -6,44 +6,60 @@ import java.util.List;
 import java.util.Queue;
 
 import main.Materia.Models.Node;
+/*
+     * Implementa un algoritmo que devuelva una lista enlazada
+     * con los nodos de cada nivel .Si el arbol tiene 
+     * N niveles debe devolver N listas enlazadas.
+     * 
+     * Ejemplo:
+     * Input:
+     *      4
+     *    2   7
+     *   1 3 6 9
+     * 
+     * Output:
+     * 4 
+     * 2 -> 7
+     * 1 -> 3 -> 6 -> 9
+     */
 
 public class ListLevels {
-    public List<List<Integer>> ListLevels(Node root) {
-        // Lista que almacenará los niveles
-        List<List<Integer>> result = new ArrayList<>();
+    public List<LinkedList<Node>> ListLeves(Node root) {
+        List<LinkedList<Node>> resultado = new ArrayList<>();
 
-        // Si el árbol está vacío
         if (root == null) {
-            return result;
+            return resultado; 
         }
 
-        // Cola para realizar un recorrido por niveles
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
+        LinkedList<Node> nivelActual = new LinkedList<>();
+        nivelActual.add(root);
 
-        // Bucle para recorrer todos los niveles
-        while (!queue.isEmpty()) {
-            int levelSize = queue.size(); // Número de nodos en el nivel actual
-            List<Integer> currentLevel = new ArrayList<>(); // Lista para este nivel
-
-            for (int i = 0; i < levelSize; i++) {
-                // Sacar el nodo de la cola
-                Node currentNode = queue.poll();
-                currentLevel.add(currentNode.getValue());
-
-                // Agregar los hijos a la cola
-                if (currentNode.getLeft() != null) {
-                    queue.add(currentNode.getLeft());
+        while (!nivelActual.isEmpty()) {
+            resultado.add(new LinkedList<>(nivelActual)); 
+            LinkedList<Node> nivelSiguiente = new LinkedList<>();
+            
+            for (Node nodo : nivelActual) {
+                if (nodo.getLeft() != null) {
+                    nivelSiguiente.add(nodo.getLeft());
                 }
-                if (currentNode.getRight() != null) {
-                    queue.add(currentNode.getRight());
+                if (nodo.getRight() != null) {
+                    nivelSiguiente.add(nodo.getRight());
                 }
             }
-
-            // Agregar la lista del nivel actual al resultado
-            result.add(currentLevel);
+            nivelActual = nivelSiguiente; 
         }
 
-        return result;
+        return resultado;
+    }
+
+    public void imprimirListasPorNivel(List<LinkedList<Node>> listas) {
+        int nivel = 0;
+        for (LinkedList<Node> lista : listas) {
+            System.out.print("Nivel " + nivel++ + ": ");
+            for (Node nodo : lista) {
+                System.out.print(nodo.getValue() + " -> ");
+            }
+            System.out.println("null");
+        }
     }
 }
