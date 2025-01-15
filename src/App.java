@@ -1,13 +1,24 @@
+import java.util.List;
+
 import main.Ejercicio_3_listLevels.*;
 import main.Materia.Controllers.ArbolAVL;
 import main.Materia.Controllers.ArbolBinario;
 import main.Materia.Controllers.ArbolRecorridos;
+import main.Materia.Ejercicio_01_insert;
+import main.Materia.Ejercicio_02_invert;
+import main.Materia.Ejercicio_03_listLeves;
+import main.Materia.Ejercicio_04_depth;
+import main.Materia.Models.Node;
 
 public class App {
     public static void main(String[] args) throws Exception {
         //runArbolBinario();
         //runEjercicio3();
-        runArbolAvl();
+        //runArbolAvl();
+        runEjercicio1Insert();
+        runEjercicio2Invert();
+        runEjercicio3();
+        runEjercicio4Depth();
     }
     
     public static void runArbolBinario() {
@@ -62,5 +73,82 @@ public class App {
 
         System.out.println("\nÁrbol AVL después de todas las inserciones:");
         arbolAVL.printTree(arbolAVL.getRoot(), "", true);
+    }
+
+    //Ejercicio1
+
+    public static void runEjercicio1Insert() {
+        System.out.println("Ejercicio 1");
+        // Input: valores a insertar en el BST
+        int[] values = {5, 3, 7, 2, 4, 6, 8};
+        Node root = null;
+        for (int value : values) {
+            root = Ejercicio_01_insert.insert(root, value);
+        }
+        System.out.println("El Árbol Binario de Búsqueda en orden:");
+        Ejercicio_01_insert.printTree(root);
+
+    }
+
+    //EJercicio 2
+     public static void runEjercicio2Invert() {
+        System.out.println("Ejercicio 2");
+        // Crear el árbol del ejemplo
+        Node root = new Node(4);
+        root.setLeft(new Node(2));
+        root.setRight(new Node(7));
+        root.getLeft().setLeft(new Node(1));
+        root.getLeft().setRight(new Node(3));
+        root.getRight().setLeft(new Node(6));
+        root.getRight().setRight(new Node(9));
+
+        // Mostrar árbol original
+        System.out.println("Árbol Original:");
+        Ejercicio_01_insert.printTree(root);  
+
+        // Invertir el árbol
+        root = Ejercicio_02_invert.invert(root);
+        System.out.println("\nÁrbol Invertido:");
+        Ejercicio_01_insert.printTree(root); 
+        
+        
+    }
+
+
+    //Ejercicio 3
+    public static void runEjercicio3ListLevels() {
+        System.out.println("Ejercicio 3");
+        Node root = new Node(4);
+        root.setLeft(new Node(2));
+        root.setRight(new Node(7));
+        root.getLeft().setLeft(new Node(1));
+        root.getLeft().setRight(new Node(3));
+        root.getRight().setLeft(new Node(6));
+        root.getRight().setRight(new Node(9));
+
+        // Mostrar árbol original
+        System.out.println("Árbol Original:");
+        Ejercicio_01_insert.printTree(root);
+        System.out.println("\nListas por nivel:");
+        List<Ejercicio_03_listLeves.ListNode> levelLists = Ejercicio_03_listLeves.listLevels(root);
+        Ejercicio_03_listLeves.printLevelLists(levelLists);
+    }
+
+    //Ejercicio 4
+    public static void runEjercicio4Depth() {
+        Node root = new Node(4);
+        root.setLeft(new Node(2));
+        root.setRight(new Node(7));
+        root.getLeft().setLeft(new Node(1));
+        root.getLeft().setRight(new Node(3));
+        root.getRight().setRight(new Node(8));
+
+        // Mostrar árbol original
+        System.out.println("Árbol Original:");
+        Ejercicio_01_insert.printTree(root);
+
+        // Calcular y mostrar la profundidad máxima
+        int maxDepth = Ejercicio_04_depth.maxDepth(root);
+        System.out.println("\nProfundidad máxima: " + maxDepth);
     }
 }
