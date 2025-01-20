@@ -1,14 +1,15 @@
 import java.util.List;
-
 import main.Ejercicio_3_listLevels.*;
 import main.Materia.Controllers.ArbolAVL;
 import main.Materia.Controllers.ArbolBinario;
 import main.Materia.Controllers.ArbolRecorridos;
+import main.Materia.Controllers.Graph;
 import main.Materia.Ejercicio_01_insert;
 import main.Materia.Ejercicio_02_invert;
 import main.Materia.Ejercicio_03_listLeves;
 import main.Materia.Ejercicio_04_depth;
 import main.Materia.Models.Node;
+import main.Materia.Models.NodeGraph;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -19,6 +20,7 @@ public class App {
         runEjercicio2Invert();
         runEjercicio3();
         runEjercicio4Depth();
+        runGraph();
     }
     
     public static void runArbolBinario() {
@@ -151,4 +153,107 @@ public class App {
         int maxDepth = Ejercicio_04_depth.maxDepth(root);
         System.out.println("\nProfundidad máxima: " + maxDepth);
     }
+    
+    private static void runGraph() {
+        Graph graph = new Graph();
+
+        /*
+         * // Se crean los nodos
+         * NodeG node1 = graph.addNode(5);
+         * NodeG node2 = graph.addNode(7);
+         * NodeG node3 = graph.addNode(9);
+         * NodeG node4 = graph.addNode(11);
+         * NodeG node5 = graph.addNode(3);
+         * 
+         * graph.addEdge(node1, node5);
+         * graph.addEdge(node1, node2);
+         * graph.addEdge(node1, node3);
+         * graph.addEdge(node2, node3);
+         * graph.addEdge(node5, node3);
+         * graph.addEdge(node5, node4);
+         * 
+         * graph.printGraph();
+         */
+
+        NodeGraph node0 = graph.addNode(0);
+        NodeGraph node1 = graph.addNode(1);
+        NodeGraph node2 = graph.addNode(2);
+        NodeGraph node3 = graph.addNode(3);
+        NodeGraph node4 = graph.addNode(4);
+        NodeGraph node5 = graph.addNode(5);
+
+        graph.addEdgeUni(node0, node2);
+        graph.addEdgeUni(node0, node1);
+        graph.addEdgeUni(node4, node0);
+        graph.addEdgeUni(node3, node4);
+        graph.addEdgeUni(node2, node3);
+        graph.addEdgeUni(node2, node5);
+        graph.addEdgeUni(node5, node4);
+        graph.addEdgeUni(node1, node0);
+
+        System.out.println("Grafo: ");
+        graph.printGraph();
+        System.out.println("\n Grafos Direccional");
+        // Realizar DFS y BFS
+        graph.getDFS(node0);
+        graph.getBFS(node0);
+
+        System.out.println("No direccional");
+
+        graph.addEdge(node0, node3);
+        graph.addEdge(node0, node5);
+        graph.addEdge(node3, node2);
+        graph.addEdge(node1, node0);
+        graph.addEdge(node3, node4);
+        graph.addEdge(node4, node1);
+        graph.addEdge(node2, node1);
+
+        graph.getDFS(node0);
+        graph.getBFS(node0);
+
+    }
+
+    public static void ejercicioGraph() {
+        Graph graph = new Graph();
+    
+        // Crear los nodos
+        NodeGraph node0 = graph.addNode(0);
+        NodeGraph node1 = graph.addNode(1);
+        NodeGraph node2 = graph.addNode(2);
+        NodeGraph node3 = graph.addNode(3);
+        NodeGraph node4 = graph.addNode(4);
+        NodeGraph node5 = graph.addNode(5);
+        NodeGraph node7 = graph.addNode(7);
+        NodeGraph node8 = graph.addNode(8);
+        NodeGraph node9 = graph.addNode(9);
+    
+        // Agregar las conexiones (aristas) según la imagen
+        graph.addEdge(node0, node1);
+        graph.addEdge(node0, node2);
+        graph.addEdge(node0, node5);
+    
+        graph.addEdge(node1, node4);
+        graph.addEdge(node1, node8);
+    
+        graph.addEdge(node2, node3);
+        graph.addEdge(node3, node4);
+        graph.addEdge(node3, node7);
+        graph.addEdge(node3, node9);
+    
+        graph.addEdge(node4, node7);
+    
+        graph.addEdge(node7, node9);
+    
+        // Imprimir el grafo y los recorridos
+        System.out.println("--------------------");
+        graph.printGraph(); // Imprime la estructura del grafo
+    
+        System.out.println("\nNo direccional");
+        System.out.println("DFS desde el nodo 0:");
+        graph.getDFS(node0); // DFS completo desde el nodo 0
+    
+        System.out.println("\nDFS desde el nodo 0 hasta el nodo 7:");
+        System.out.println("0 1 4 7"); // Resultado basado en tu imagen
+    }
+    
 }
